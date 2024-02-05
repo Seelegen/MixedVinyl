@@ -19,6 +19,7 @@ class VinylController extends AbstractController
             ['song' => 'On Bended Knee', 'artist' => 'Boyz II Men'],
             ['song' => 'Fantasy', 'artist' => 'Mariah Carey'],
         ];
+
         return $this->render('vinyl/homepage.html.twig', [
             'title' => 'PB & Jams',
             'tracks' => $tracks,
@@ -28,12 +29,11 @@ class VinylController extends AbstractController
     #[Route('/browse/{slug}')]
     public function browse(string $slug = null): Response
     {
-        if (!$slug) {
-            return new Response('Browse all the vinyl!');
-        }
-        $title = str_replace('-', ' ', $slug);
-        $title = ucwords($title);
+        $slug = str_replace('-', ' ', $slug);
+        $genre = ucwords($slug);
 
-        return new Response('Genre: '.$title);
+        return $this->render('vinyl/browse.html.twig', [
+            'genre' => $genre
+        ]);
     }
 }
